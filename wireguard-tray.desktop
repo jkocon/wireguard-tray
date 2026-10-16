@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=WireGuard Tray
+Comment=Switch between WireGuard networks from the system tray
+Exec=/usr/local/lib/wireguard-tray/wireguard-tray
+Icon=wireguard-tray
+Terminal=false
+NoDisplay=true
+X-KDE-autostart-phase=2

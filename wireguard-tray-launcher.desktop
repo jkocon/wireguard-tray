@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=WireGuard Tray
+GenericName=WireGuard
+Comment=Switch between WireGuard networks from the system tray
+Exec=/usr/local/lib/wireguard-tray/wireguard-tray
+Icon=wireguard-tray
+Terminal=false
+Categories=Network;
+Keywords=wireguard;vpn;wg;tunnel;network;
