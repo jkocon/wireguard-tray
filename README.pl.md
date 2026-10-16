@@ -1,5 +1,9 @@
 # wireguard-tray
 
+> **Zarchiwizowane (2026-10-16): wireguard-tray jest teraz częścią [vpn-tray](https://github.com/jkocon/vpn-tray)** –
+> jedna ikona dla Tailscale, Twingate, NetBird i WireGuard (zawsze jeden VPN). Tylko ten VPN:
+> `vpn-tray --only wireguard`.
+
 Ikona **WireGuard** w zasobniku systemowym: kilka sieci WireGuard (zwykłe pliki `.conf`
 z `wg-quick`) zapisanych w NetworkManagerze i wybór jednej z nich z menu. Wybranie sieci
 rozłącza pozostałe i łączy wybraną.

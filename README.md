@@ -1,5 +1,9 @@
 # wireguard-tray
 
+> **Archived (2026-10-16): wireguard-tray lives on in [vpn-tray](https://github.com/jkocon/vpn-tray)** –
+> one tray icon for Tailscale, Twingate, NetBird and WireGuard (one VPN at a time). For only this VPN
+> run `vpn-tray --only wireguard`.
+
 A **WireGuard** icon for the Linux system tray: keep several WireGuard networks (plain
 `wg-quick` `.conf` files) in NetworkManager and pick the one you want from a single menu.
 Choosing a network disconnects the others and connects the chosen one.
