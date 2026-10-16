@@ -483,7 +483,7 @@ fn import() {
     if !valid_iface(&name) {
         return APP.error("Use 1-15 characters: letters, digits, '-' and '_'.");
     }
-    let existing = parse_connections(&nmcli(&["-t", "-f", "NAME,UUID,TYPE,AUTOCONNECT,DEVICE,STATE", "connection", "show"], 15).stdout);
+    let existing = parse_connections(&nmcli(&["-t", "-f", "NAME,UUID,TYPE,AUTOCONNECT,DEVICE,STATE,FILENAME", "connection", "show"], 15).stdout);
     if existing.iter().any(|c| c.name == name || c.device == name) {
         return APP.error(&format!("A WireGuard connection named {name} already exists - pick another name or remove it first."));
     }
@@ -530,7 +530,7 @@ struct Gathered {
 /// Odpytanie nmcli (każde wywołanie to osobny proces).
 fn gather() -> Gathered {
     let mut g = Gathered { conns: Vec::new(), details: HashMap::new(), error: String::new() };
-    let out = nmcli(&["-t", "-f", "NAME,UUID,TYPE,AUTOCONNECT,DEVICE,STATE", "connection", "show"], 8);
+    let out = nmcli(&["-t", "-f", "NAME,UUID,TYPE,AUTOCONNECT,DEVICE,STATE,FILENAME", "connection", "show"], 8);
     if !out.ok() {
         g.error = if out.code == -1 && !which("nmcli") {
             "nmcli not found - install NetworkManager".into()

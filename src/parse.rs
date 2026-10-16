@@ -74,12 +74,15 @@ pub fn split_terse(line: &str) -> Vec<String> {
     fields
 }
 
-/// `nmcli -t -f NAME,UUID,TYPE,AUTOCONNECT,DEVICE,STATE connection show` → tylko WireGuard.
+/// `nmcli -t -f NAME,UUID,TYPE,AUTOCONNECT,DEVICE,STATE,FILENAME connection show` → tylko WireGuard
+/// zapisany w NetworkManagerze. Interfejsy tworzone przez inne programy (np. wt0 NetBirda) NetworkManager
+/// pokazuje jako połączenia "connected (externally)" trzymane tylko w pamięci, w /run/NetworkManager -
+/// to nie są sieci do wyboru.
 pub fn parse_connections(out: &str) -> Vec<Conn> {
     out.lines()
         .filter_map(|line| {
             let f = split_terse(line);
-            if f.len() < 6 || f[2] != "wireguard" {
+            if f.len() < 6 || f[2] != "wireguard" || f.get(6).is_some_and(|file| file.starts_with("/run/")) {
                 return None;
             }
             Some(Conn {
@@ -210,9 +213,10 @@ mod tests {
 
     #[test]
     fn connections_only_wireguard() {
-        let out = "Kurantowka-Priv:cea2:802-11-wireless:yes:wlan0:activated\n\
-                   kurant:c46c:wireguard:no:kurant:activated\n\
-                   biuro\\:2:aaaa:wireguard:yes::\n";
+        let out = "Kurantowka-Priv:cea2:802-11-wireless:yes:wlan0:activated:/etc/NetworkManager/system-connections/k.nmconnection\n\
+                   kurant:c46c:wireguard:no:kurant:activated:/etc/NetworkManager/system-connections/kurant.nmconnection\n\
+                   wt0:d00d:wireguard:no:wt0:activated:/run/NetworkManager/system-connections/wt0.nmconnection\n\
+                   biuro\\:2:aaaa:wireguard:yes:::\n";
         let c = parse_connections(out);
         assert_eq!(c.len(), 2);
         assert!(c[0].active() && !c[0].autoconnect);
